@@ -1,16 +1,21 @@
-import express, { Express, Request, Response, Application } from 'express'
+import { Request, Response } from 'express'
 import dotenv from 'dotenv'
+import { dbConnect } from './utils'
+import app from './app'
 
-//For env File
+//env config
 dotenv.config()
 
-const app: Application = express()
-const port = process.env.PORT || 8000
+//port config
+const port = Number(process.env.PORT) || 8000
 
+//route config
 app.get('/', (req: Request, res: Response) => {
-  res.send('Welcome to Express & TypeScript Server')
+  res.send('Server is running good... ✨🐱‍🏍🔧🚀⚡🔥')
 })
 
+//server config
 app.listen(port, () => {
-  console.log(`Server is Fire at http://localhost:${port}`)
+  console.log(`Server is running on port ${port}`)
+  dbConnect()
 })
