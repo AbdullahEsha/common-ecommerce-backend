@@ -1,104 +1,101 @@
 import { User } from '../models'
-import { Request, Response } from 'express'
-import { TUser } from '../types'
+import e, { Request, Response, NextFunction } from 'express'
+import { TUser, TUserAdd } from '../types'
+import { catchAsync, AppError } from '../utils'
 
 // get all users
-export const getUsers = async (req: Request, res: Response): Promise<void> => {
-  try {
+export const getUsers = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
     const users: TUser[] = await User.find()
-    res.status(200).json({ users })
-  } catch (error) {
-    res.status(500).json({
-      message: 'Error fetching users',
-      success: false,
-      error,
+    if (!users) {
+      return next(new AppError('No users found', 404))
+    }
+    res.status(200).json({
+      users,
+      success: true,
+      count: users.length,
     })
-  }
-}
+  },
+)
 
 // get single user
-export const getUser = async (req: Request, res: Response): Promise<void> => {
-  try {
+export const getUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
     const user: TUser | null = await User.findById(req.params.id)
-    res.status(200).json({ user })
-  } catch (error) {
-    res.status(500).json({
-      message: 'Error fetching user',
-      success: false,
-      error,
-    })
-  }
-}
+    if (!user) {
+      return next(new AppError('No user found', 404))
+    }
+    res.status(200).json({ user, success: true, message: 'User found 🔥' })
+  },
+)
 
 // add user
-export const addUser = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const body = req.body as Pick<TUser, 'name' | 'email' | 'password'>
-    const user: TUser = new User({
-      name: body.name,
-      email: body.email,
-      password: body.password,
+export const addUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { name, email, password } = req.body
+
+    const user: TUserAdd = new User({
+      name,
+      email,
+      password,
     })
 
-    const newUser: TUser = await user.save()
+    const newUser: TUserAdd = await user.save()
 
-    res
-      .status(201)
-      .json({ message: 'User added', user: newUser, success: true })
-  } catch (error) {
-    res.status(500).json({
-      message: 'Error adding user',
-      success: false,
-      error,
+    if (!newUser) {
+      return next(new AppError('No user found', 404))
+    }
+
+    res.status(201).json({
+      message: 'User added',
+      user: newUser,
+      success: true,
     })
-  }
-}
+  },
+)
 
 // update user
-export const updateUser = async (
-  req: Request,
-  res: Response,
-): Promise<void> => {
-  try {
+export const updateUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
     const {
+      body,
       params: { id },
-      body,
     } = req
-    const updateUser: TUser | null = await User.findByIdAndUpdate(
-      { _id: id },
-      body,
-    )
+    const user: TUserAdd | null = await User.findById(id)
+
+    if (!user) {
+      return next(new AppError('User not found', 404))
+    }
+
+    user.name = body.name || user.name
+    user.email = body.email || user.email
+    user.password = body.password || user.password
+
+    const updatedUser: TUserAdd = await user.save()
+
     res.status(200).json({
       message: 'User updated',
-      user: updateUser,
+      user: updatedUser,
       success: true,
     })
-  } catch (error) {
-    res.status(500).json({
-      message: 'Error updating user',
-      success: false,
-      error,
-    })
-  }
-}
+  },
+)
 
 // delete user
-export const deleteUser = async (
-  req: Request,
-  res: Response,
-): Promise<void> => {
-  try {
-    const deleteUser: TUser | null = await User.findByIdAndDelete(req.params.id)
+export const deleteUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const deletedUser: TUser | null = await User.findByIdAndDelete(
+      req.params.id,
+    )
+
+    if (!deletedUser) {
+      return next(new AppError('User not found', 404))
+    }
+
     res.status(200).json({
       message: 'User deleted',
-      user: deleteUser,
+      user: deletedUser,
       success: true,
     })
-  } catch (error) {
-    res.status(500).json({
-      message: 'Error deleting user',
-      success: false,
-      error,
-    })
-  }
-}
+  },
+)
