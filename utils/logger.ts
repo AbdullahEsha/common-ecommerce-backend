@@ -22,7 +22,7 @@ const logger = createLogger({
       level: 'error',
     }),
     new transports.DailyRotateFile({
-      filename: 'logs/combined-%DATE%.log',
+      filename: 'logs/%DATE%.log',
       datePattern: 'YYYY-MM-DD',
       zippedArchive: true,
       maxSize: '20m',
