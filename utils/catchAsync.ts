@@ -2,15 +2,10 @@
 // It is used in the controllers to catch any errors that are thrown
 //
 import { Request, Response, NextFunction } from 'express'
+import { TAsyncFunction } from '../types'
 
-type TAsyncFunction = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => Promise<void>
-
-export const catchAsync = (fn: TAsyncFunction) => {
+export const catchAsync = (func: TAsyncFunction) => {
   return (req: Request, res: Response, next: NextFunction): void => {
-    fn(req, res, next).catch(next)
+    func(req, res, next).catch(next)
   }
 }
