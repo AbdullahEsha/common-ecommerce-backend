@@ -26,13 +26,20 @@ const userSchema = new Schema<TUser>(
     password: {
       type: String,
       required: [true, 'Please add a password'],
+      select: false,
       trim: true,
       maxlength: [50, 'Password cannot be more than 50 characters'],
     },
     userType: {
       type: String,
-      enum: ['admin', 'user'],
+      enum: ['admin', 'user', 'superadmin'],
       default: 'user',
+    },
+    domain: {
+      type: String,
+      trim: true,
+      maxlength: [50, 'Domain cannot be more than 50 characters'],
+      required: [true, 'Please add a domain'],
     },
   },
   {

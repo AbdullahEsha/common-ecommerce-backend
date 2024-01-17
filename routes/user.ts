@@ -9,10 +9,11 @@ import {
   addUser,
   updateUser,
   deleteUser,
-} from '../controllers/userController'
+} from '../controllers'
 
 //routes
 router.route('/').get(getUsers).post(addUser)
+
 router.route('/:id').get(getUser).put(updateUser).delete(deleteUser)
 
-export default router
+export { router as userRouter }

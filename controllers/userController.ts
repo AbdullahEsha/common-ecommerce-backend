@@ -4,7 +4,7 @@ import { TUser, TUserAdd } from '../types'
 import { catchAsync, AppError } from '../utils'
 
 // get all users
-export const getUsers = catchAsync(
+const getUsers = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const users: TUser[] = await User.find()
     if (!users) {
@@ -19,7 +19,7 @@ export const getUsers = catchAsync(
 )
 
 // get single user
-export const getUser = catchAsync(
+const getUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const user: TUser | null = await User.findById(req.params.id)
     if (!user) {
@@ -30,14 +30,15 @@ export const getUser = catchAsync(
 )
 
 // add user
-export const addUser = catchAsync(
+const addUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { name, email, password } = req.body
+    const { name, email, password, domain } = req.body
 
     const user: TUserAdd = new User({
       name,
       email,
       password,
+      domain,
     })
 
     const newUser: TUserAdd = await user.save()
@@ -55,7 +56,7 @@ export const addUser = catchAsync(
 )
 
 // update user
-export const updateUser = catchAsync(
+const updateUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const {
       body,
@@ -82,7 +83,7 @@ export const updateUser = catchAsync(
 )
 
 // delete user
-export const deleteUser = catchAsync(
+const deleteUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const deletedUser: TUser | null = await User.findByIdAndDelete(
       req.params.id,
@@ -99,3 +100,5 @@ export const deleteUser = catchAsync(
     })
   },
 )
+
+export { getUsers, getUser, addUser, updateUser, deleteUser }

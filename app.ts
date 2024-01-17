@@ -2,13 +2,12 @@ import dotenv from 'dotenv'
 import express, { Application, Request, Response, NextFunction } from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import rateLimit from 'express-rate-limit'
 
 //import routes
-import routerUser from './routes/user'
+import { userRouter } from './routes'
 import { notFound, errorHandler, processRequest } from './middlewares'
 import { catchAsync } from './utils'
-import { dbConnect } from './config'
+import { dbConnect, limiter } from './config'
 
 //env config
 dotenv.config()
@@ -17,15 +16,10 @@ dotenv.config()
 const app: Application = express()
 
 //rate limiter
-const limiter = rateLimit({
-  max: 100, // 100 requests
-  windowMs: 60 * 60 * 1000, // per hour
-  message: 'Too many requests from this IP, please try again in an hour!', // message to send
-})
 app.use('/api', limiter)
 
 //routes
-app.use('/api/v1/user', routerUser)
+app.use('/api/v1/user', userRouter)
 
 // test route
 app.get(
@@ -37,6 +31,9 @@ app.get(
 
 // db config
 dbConnect()
+
+//static files
+app.use(express.static('public')) // to serve static files
 
 //middlewares
 app.use(express.json())
