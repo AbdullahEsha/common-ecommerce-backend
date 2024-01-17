@@ -1,5 +1,5 @@
 import { User } from '../models'
-import e, { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import { TUser, TUserAdd } from '../types'
 import { catchAsync, AppError } from '../utils'
 
@@ -11,7 +11,7 @@ export const getUsers = catchAsync(
       return next(new AppError('No users found', 404))
     }
     res.status(200).json({
-      users,
+      users: users,
       success: true,
       count: users.length,
     })
