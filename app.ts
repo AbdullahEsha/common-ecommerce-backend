@@ -7,7 +7,8 @@ import rateLimit from 'express-rate-limit'
 //import routes
 import routerUser from './routes/user'
 import { notFound, errorHandler, processRequest } from './middlewares'
-import { dbConnect, catchAsync } from './utils'
+import { catchAsync } from './utils'
+import { dbConnect } from './config'
 
 //env config
 dotenv.config()
