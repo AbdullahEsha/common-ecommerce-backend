@@ -1,4 +1,4 @@
-# common-ecommerce-backend
+# Common Ecommerce Backend
 
 # Project Overview
 
@@ -26,7 +26,7 @@ The following API endpoints are available:
 
 ## Usage
 
-To use the API, send HTTP requests to the appropriate endpoint. For example, to get a list of all repositories, send a GET request to `/api/repositories`.
+To use the API, send HTTP requests to the appropriate endpoint. For example, to get a list of all repositories, send a GET request to `/api/v1/repositories`.
 
 ## Contributing
 
