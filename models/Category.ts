@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { TCategory } from '../types'
+
 const { Schema, model } = mongoose
 
 const categorySchema = new Schema<TCategory>(

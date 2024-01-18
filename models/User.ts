@@ -3,6 +3,7 @@
 import mongoose from 'mongoose'
 import { TUser } from '../types'
 import { isEmail } from 'validator'
+
 const { Schema, model } = mongoose
 
 const userSchema = new Schema<TUser>(
