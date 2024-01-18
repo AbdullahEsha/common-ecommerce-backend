@@ -20,8 +20,9 @@ const processRequest = async (
 
 // create a global error handler middleware
 const notFound = (req: Request, res: Response, next: NextFunction) => {
-  const error = new AppError(`Not found - ${req.originalUrl}`, 404)
+  // handle error for /favicon.ico request from browser to server, we have ico on public folder
 
+  const error = new AppError(`Not found - ${req.originalUrl}`, 404)
   next(error)
 }
 

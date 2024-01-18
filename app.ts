@@ -29,6 +29,9 @@ app.get(
   }),
 )
 
+// add favicon.ico to static files on /public folder /favicon.ico
+app.use('/favicon.ico', express.static('public/favicon.ico'))
+
 // db config
 dbConnect()
 

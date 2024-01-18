@@ -70,7 +70,7 @@ const changePassword = catchAsync(
       return next(new AppError('User not found', 404))
     }
 
-    if (!(await comparePassword(password, user.password))) {
+    if (!comparePassword(password, user.password)) {
       return next(new AppError('Incorrect password', 401))
     }
 
