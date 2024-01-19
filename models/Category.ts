@@ -22,6 +22,11 @@ const categorySchema = new Schema<TCategory>(
       enum: ['active', 'inactive'],
       default: 'active',
     },
+    domain: {
+      type: String,
+      trim: true,
+      maxlength: [50, 'Domain cannot be more than 50 characters'],
+    },
   },
   {
     timestamps: true,

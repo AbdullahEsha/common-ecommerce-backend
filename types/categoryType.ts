@@ -3,6 +3,7 @@ export type TCategory = {
   title: string
   slug: string
   status: string
+  domain: string
   createdAt?: Date
   updatedAt?: Date
 }

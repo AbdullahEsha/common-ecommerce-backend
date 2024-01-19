@@ -11,6 +11,12 @@ const domainSchema = new Schema<TDomain>(
       trim: true,
       maxlength: [50, 'Name cannot be more than 50 characters'],
     },
+    subDomain: {
+      type: String,
+      required: [true, 'Please add a subDomain'],
+      trim: true,
+      maxlength: [50, 'subDomain cannot be more than 50 characters'],
+    },
     userLimit: {
       type: Number,
       trim: true,

@@ -4,6 +4,7 @@ export type TContact = {
   subject: string
   message: string
   status: string
+  domain: string
   createdAt?: Date
   updatedAt?: Date
 }

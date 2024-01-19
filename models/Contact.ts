@@ -30,6 +30,11 @@ const contactSchema = new Schema<TContact>(
       enum: ['active', 'inactive'],
       default: 'active',
     },
+    domain: {
+      type: String,
+      trim: true,
+      maxlength: [50, 'Domain cannot be more than 50 characters'],
+    },
   },
   {
     timestamps: true,
