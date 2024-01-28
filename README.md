@@ -24,9 +24,7 @@ The following API endpoints are available:
 | `/api/v1/repositories/:id/commits` | Returns a list of commits for a specific repository. |
 | `/api/v1/repositories/:id/commits` | Returns information about a specific commit.         |
 
-## Socket.IO Server Config
-
-# Express.js Server with Socket.io and HTTP API
+## Express.js Server with Socket.io and HTTP API
 
 This is a simple example of an Express.js server that supports both WebSocket communication using Socket.io and stateless communication through a RESTful HTTP API.
 
