@@ -24,6 +24,15 @@ The following API endpoints are available:
 | `/api/v1/repositories/:id/commits` | Returns a list of commits for a specific repository. |
 | `/api/v1/repositories/:id/commits` | Returns information about a specific commit.         |
 
+## Socket.IO Server Config
+
+# Express.js Server with Socket.io and HTTP API
+
+This is a simple example of an Express.js server that supports both WebSocket communication using Socket.io and stateless communication through a RESTful HTTP API.
+
+- **WebSocket (Socket.io):** Real-time, bidirectional communication for stateful interactions.
+- **HTTP API (Express):** Stateless communication through RESTful routes.
+
 ## Usage
 
 To use the API, send HTTP requests to the appropriate endpoint. For example, to get a list of all repositories, send a GET request to `/api/v1/repositories`.
@@ -39,3 +48,8 @@ If you would like to contribute to this project, please follow these steps:
 5. Create a pull request.
 
 I hope this helps! Let me know if you have any other questions.
+
+## Refs
+
+- Utility Types In TypeScript (https://www.typescriptlang.org/docs/handbook/utility-types.html)
+- Socket.IO Server Initialization (https://socket.io/docs/v4/server-initialization/)
