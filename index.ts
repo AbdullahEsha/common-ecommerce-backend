@@ -7,7 +7,7 @@ dotenv.config()
 
 //port config
 const port = Number(process.env.PORT) || 5000
-const socketPort = Number(process.env.SOCKET_PORT) || 5050
+const socketPort = Number(process.env.SOCKET_PORT) || 4000
 
 // socket io config connection
 io.on('connection', (socket) => {

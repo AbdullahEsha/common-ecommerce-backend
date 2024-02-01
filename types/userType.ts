@@ -1,4 +1,4 @@
-import exp from 'constants'
+import mongoose from 'mongoose'
 
 export type TUser = {
   _id?: string
@@ -6,7 +6,7 @@ export type TUser = {
   email: string
   password: string
   userType?: string
-  domain?: string
+  domain?: mongoose.Schema.Types.ObjectId
 }
 
 // type for user save method
@@ -16,7 +16,7 @@ export type TUserAdd = {
   email: string
   password: string
   userType?: string
-  domain?: string
+  domain?: mongoose.Schema.Types.ObjectId
 }
 
 export type TUserProtect = {

@@ -4,7 +4,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
 //import routes
-import { userRouter } from './routes'
+import { productRouter, userRouter } from './routes'
 import { notFound, errorHandler, processRequest } from './middlewares'
 import { catchAsync } from './utils'
 import { dbConnect, limiter } from './config'
@@ -20,6 +20,7 @@ app.use('/api', limiter)
 
 //routes
 app.use('/api/v1/user', userRouter)
+app.use('/api/v1/product', productRouter)
 
 // test route
 app.get(

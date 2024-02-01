@@ -37,9 +37,8 @@ const userSchema = new Schema<TUser>(
       default: 'user',
     },
     domain: {
-      type: String,
-      trim: true,
-      maxlength: [50, 'Domain cannot be more than 50 characters'],
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Domain',
       required: [true, 'Please add a domain'],
     },
   },

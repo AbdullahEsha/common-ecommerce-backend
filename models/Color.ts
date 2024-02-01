@@ -14,7 +14,7 @@ const colorSchema = new Schema<TColor>(
       trim: true,
     },
     tertiary: {
-      ttype: String,
+      type: String,
       trim: true,
     },
     quaternary: {
@@ -22,8 +22,9 @@ const colorSchema = new Schema<TColor>(
       trim: true,
     },
     domain: {
-      type: String,
-      trim: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Domain',
+      required: [true, 'Please add a domain'],
     },
   },
   {
