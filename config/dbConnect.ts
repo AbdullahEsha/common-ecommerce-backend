@@ -9,7 +9,9 @@ dotenv.config()
 const MONGO_DB_PASSWORD = process.env.MONGO_DB_PASSWORD
 const MONGO_DB_USER = process.env.MONGO_DB_USER
 const MONGO_DB_NAME = process.env.MONGO_DB_NAME
-const MONGO_DB_URL = `mongodb+srv://${MONGO_DB_USER}:${MONGO_DB_PASSWORD}@cluster0.4w34rds.mongodb.net/${MONGO_DB_NAME}?retryWrites=true&w=majority`
+const MONGO_DB_HOST = process.env.MONGO_DB_HOST
+
+const MONGO_DB_URL = `mongodb+srv://${MONGO_DB_USER}:${MONGO_DB_PASSWORD}@${MONGO_DB_HOST}.mongodb.net/${MONGO_DB_NAME}?retryWrites=true&w=majority`
 
 //db connection
 export const dbConnect = async (): Promise<TDBConn> => {
