@@ -1,4 +1,3 @@
-import dotenv from 'dotenv'
 import express, { Application, Request, Response, NextFunction } from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
@@ -8,9 +7,6 @@ import { productRouter, userRouter } from './routes'
 import { notFound, errorHandler, processRequest } from './middlewares'
 import { catchAsync } from './utils'
 import { dbConnect, limiter } from './config'
-
-//env config
-dotenv.config()
 
 //app config
 const app: Application = express()

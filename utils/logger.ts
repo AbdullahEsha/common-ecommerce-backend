@@ -1,6 +1,6 @@
 import { createLogger, format, transports } from 'winston'
-
 import 'winston-daily-rotate-file'
+import { NODE_ENV } from '../dotenvConfig'
 
 // create logger with a daily rotate file transport with proper type and generics if needed
 export const logger = createLogger({
@@ -30,7 +30,7 @@ export const logger = createLogger({
   ],
 })
 
-if (process.env.NODE_ENV !== 'production') {
+if (NODE_ENV !== 'production') {
   logger.add(
     new transports.Console({
       format: format.combine(

@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { TUser } from '../types'
+import { JWT_EXPIRES_IN, JWT_SECRET } from '../dotenvConfig'
 
 export const signToken = (user: TUser) => {
   return jwt.sign(
@@ -10,9 +11,9 @@ export const signToken = (user: TUser) => {
       userType: user.userType,
       domain: user.domain,
     },
-    process.env.JWT_SECRET!,
+    JWT_SECRET!,
     {
-      expiresIn: process.env.JWT_EXPIRES_IN,
+      expiresIn: JWT_EXPIRES_IN,
     },
   )
 }

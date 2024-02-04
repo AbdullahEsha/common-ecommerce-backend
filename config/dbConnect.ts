@@ -1,15 +1,11 @@
-import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import { TDBConn } from '../types'
-
-//env config
-dotenv.config()
-
-//db config
-const MONGO_DB_PASSWORD = process.env.MONGO_DB_PASSWORD
-const MONGO_DB_USER = process.env.MONGO_DB_USER
-const MONGO_DB_NAME = process.env.MONGO_DB_NAME
-const MONGO_DB_HOST = process.env.MONGO_DB_HOST
+import {
+  MONGO_DB_HOST,
+  MONGO_DB_NAME,
+  MONGO_DB_PASSWORD,
+  MONGO_DB_USER,
+} from '../dotenvConfig'
 
 const MONGO_DB_URL = `mongodb+srv://${MONGO_DB_USER}:${MONGO_DB_PASSWORD}@${MONGO_DB_HOST}.mongodb.net/${MONGO_DB_NAME}?retryWrites=true&w=majority`
 

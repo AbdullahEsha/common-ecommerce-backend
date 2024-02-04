@@ -1,13 +1,10 @@
-import dotenv from 'dotenv'
 import app from './app'
 import { io, httpServer } from './config'
-
-//env config
-dotenv.config()
+import { PORT, SOCKET_PORT } from './dotenvConfig'
 
 //port config
-const port = Number(process.env.PORT) || 5000
-const socketPort = Number(process.env.SOCKET_PORT) || 4000
+const port = Number(PORT) || 5000
+const socketPort = Number(SOCKET_PORT) || 4000
 
 // socket io config connection
 io.on('connection', (socket) => {
