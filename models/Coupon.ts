@@ -40,14 +40,14 @@ const couponSchema = new Schema<TCoupon>(
       type: Boolean,
       default: false,
     },
+    expiresAt: {
+      type: Date,
+      required: [true, 'Please add an expiry date'],
+    },
     domain: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Domain',
       required: [true, 'Please add a domain'],
-    },
-    expiresAt: {
-      type: Date,
-      required: [true, 'Please add an expiry date'],
     },
   },
   {
