@@ -2,8 +2,6 @@ import mongoose from 'mongoose'
 import { TProduct } from '../types'
 const { Schema, model } = mongoose
 
-// vartual populate variant in product model
-
 const productSchema = new Schema<TProduct>(
   {
     title: {

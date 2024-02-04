@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { isEmail } from 'validator'
 import { TContact } from '../types'
 
 const { Schema, model } = mongoose
@@ -10,14 +11,12 @@ const contactSchema = new Schema<TContact>(
       required: [true, 'Please add an email'],
       trim: true,
       lowercase: true,
-      maxlength: [50, 'Email cannot be more than 50 characters'],
-      minlength: [5, 'Email cannot be less than 5 characters'],
+      validate: [isEmail, 'Please enter a valid email'],
     },
     subject: {
       type: String,
       required: [true, 'Please add a subject'],
       trim: true,
-      maxlength: [70, 'Subject cannot be more than 70 characters'],
     },
     message: {
       type: String,
@@ -40,5 +39,11 @@ const contactSchema = new Schema<TContact>(
     timestamps: true,
   },
 )
+
+contactSchema.path('email').validate(async (email: string) => {
+  if (!email.includes('@') || !email.includes('.')) {
+    return "Email should contain '@' and '.'"
+  }
+})
 
 export const Contact = model<TContact>('Contact', contactSchema)

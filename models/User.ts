@@ -20,8 +20,6 @@ const userSchema = new Schema<TUser>(
       trim: true,
       unique: true,
       lowercase: true,
-      maxlength: [50, 'Email cannot be more than 50 characters'],
-      minlength: [5, 'Email cannot be less than 5 characters'],
       validate: [isEmail, 'Please enter a valid email'],
     },
     password: {
