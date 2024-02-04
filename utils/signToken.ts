@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { TUser } from '../types'
-import { JWT_EXPIRES_IN, JWT_SECRET } from '../dotenvConfig'
+import { JWT_EXPIRES_IN, JWT_SECRET } from '../envSetup'
 
 export const signToken = (user: TUser) => {
   return jwt.sign(

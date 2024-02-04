@@ -1,6 +1,6 @@
 import app from './app'
 import { io, httpServer } from './config'
-import { PORT, SOCKET_PORT } from './dotenvConfig'
+import { PORT, SOCKET_PORT } from './envSetup'
 
 //port config
 const port = Number(PORT) || 5000

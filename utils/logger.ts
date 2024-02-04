@@ -1,6 +1,6 @@
 import { createLogger, format, transports } from 'winston'
 import 'winston-daily-rotate-file'
-import { NODE_ENV } from '../dotenvConfig'
+import { NODE_ENV } from '../envSetup'
 
 // create logger with a daily rotate file transport with proper type and generics if needed
 export const logger = createLogger({
