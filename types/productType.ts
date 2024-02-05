@@ -6,7 +6,8 @@ export type TProduct = {
   title: string
   slug: string
   description: string
-  price: number
+  ragularPrice: number
+  salePrice?: number
   review?: TReview[]
   category?: string
   status?: string

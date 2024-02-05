@@ -21,10 +21,13 @@ const productSchema = new Schema<TProduct>(
       required: [true, 'Please add a description'],
       maxlength: [500, 'Description cannot be more than 500 characters'],
     },
-    price: {
+    ragularPrice: {
       type: Number,
       required: [true, 'Please add a price'],
       default: 0.0,
+    },
+    salePrice: {
+      type: Number,
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
