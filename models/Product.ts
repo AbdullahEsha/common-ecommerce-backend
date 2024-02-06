@@ -4,6 +4,13 @@ const { Schema, model } = mongoose
 
 const productSchema = new Schema<TProduct>(
   {
+    sku: {
+      type: String,
+      required: [true, 'Please add a sku'],
+      trim: true,
+      unique: true,
+      maxlength: [100, 'Sku cannot be more than 100 characters'],
+    },
     title: {
       type: String,
       required: [true, 'Please add a title'],

@@ -3,6 +3,7 @@ import { TVariant } from './variantType'
 
 export type TProduct = {
   _id?: string
+  sku: string
   title: string
   slug: string
   description: string
