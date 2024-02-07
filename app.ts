@@ -3,7 +3,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
 //import routes
-import { productRouter, userRouter } from './routes'
+import { userRouter, productRouter } from './routes'
 import { notFound, errorHandler, processRequest } from './middlewares'
 import { catchAsync } from './utils'
 import { dbConnect, limiter } from './config'

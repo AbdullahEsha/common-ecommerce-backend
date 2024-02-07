@@ -3,10 +3,14 @@ import express from 'express'
 const router = express.Router()
 
 //import controllers
-import { getProduct, getProducts } from '../controllers'
+import { createProduct } from '../controllers'
 
-router.route('/').get(getProducts)
-
-router.route('/:id').get(getProduct)
+//routes
+router
+  .route('/')
+  .post(createProduct)
+  .get((req, res) => {
+    res.send('Product Route')
+  })
 
 export { router as productRouter }
