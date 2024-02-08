@@ -6,13 +6,13 @@ const router = express.Router()
 import {
   getUsers,
   getUser,
-  addUser,
+  createUser,
   updateUser,
   deleteUser,
 } from '../controllers'
 
 //routes
-router.route('/').get(getUsers).post(addUser)
+router.route('/').get(getUsers).post(createUser)
 
 router.route('/:id').get(getUser).put(updateUser).delete(deleteUser)
 

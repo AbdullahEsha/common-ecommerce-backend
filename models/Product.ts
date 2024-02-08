@@ -49,25 +49,25 @@ const productSchema = new Schema<TProduct>(
   },
   {
     timestamps: true,
-    // toObject: { virtuals: true },
-    // toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
   },
 )
 
 // vartual populate variant in product model
-// productSchema.virtual('variant', {
-//   ref: 'Variant',
-//   localField: '_id',
-//   foreignField: 'productId',
-//   justOne: false,
-// })
+productSchema.virtual('variant', {
+  ref: 'Variant',
+  localField: '_id',
+  foreignField: 'product',
+  justOne: false,
+})
 
 // vartual populate review in product model
-// productSchema.virtual('review', {
-//   ref: 'Review',
-//   localField: '_id',
-//   foreignField: 'productId',
-//   justOne: false,
-// })
+productSchema.virtual('review', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'product',
+  justOne: false,
+})
 
 export const Product = model<TProduct>('Product', productSchema)

@@ -52,12 +52,14 @@ const allProducts = catchAsync(
     const products = await Product.find()
       .populate('category')
       .populate('domain')
+      .populate('variant')
+      .populate('review')
 
     if (!products) {
       return next(new AppError('No products found', 404))
     }
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
       results: products.length,
       data: products,

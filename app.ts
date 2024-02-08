@@ -8,6 +8,8 @@ import {
   productRouter,
   domainRouter,
   categoryRouter,
+  variantRouter,
+  reviewRouter,
 } from './routes'
 import { notFound, errorHandler, processRequest } from './middlewares'
 import { catchAsync } from './utils'
@@ -41,6 +43,8 @@ app.use('/api/v1/user', userRouter)
 app.use('/api/v1/product', productRouter)
 app.use('/api/v1/domain', domainRouter)
 app.use('/api/v1/category', categoryRouter)
+app.use('/api/v1/variant', variantRouter)
+app.use('/api/v1/review', reviewRouter)
 
 // test route
 app.get(

@@ -11,9 +11,9 @@ const getUsers = catchAsync(
       return next(new AppError('No users found', 404))
     }
     res.status(200).json({
-      users: users,
-      success: true,
-      count: users.length,
+      status: 'success',
+      message: 'All users',
+      data: users,
     })
   },
 )
@@ -30,27 +30,18 @@ const getUser = catchAsync(
 )
 
 // add user
-const addUser = catchAsync(
+const createUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { name, email, password, domain } = req.body
+    const user = await User.create(req.body as TUser)
 
-    const user: TUserAdd = new User({
-      name,
-      email,
-      password,
-      domain,
-    })
-
-    const newUser: TUserAdd = await user.save()
-
-    if (!newUser) {
+    if (!user) {
       return next(new AppError('No user found', 404))
     }
 
     res.status(201).json({
-      message: 'User added',
-      user: newUser,
-      success: true,
+      status: 'success',
+      message: 'User created successfully',
+      data: user,
     })
   },
 )
@@ -101,4 +92,4 @@ const deleteUser = catchAsync(
   },
 )
 
-export { getUsers, getUser, addUser, updateUser, deleteUser }
+export { getUsers, getUser, createUser, updateUser, deleteUser }

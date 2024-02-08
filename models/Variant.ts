@@ -5,7 +5,7 @@ const { Schema, model } = mongoose
 
 const variantSchema = new Schema<TVariant>(
   {
-    productId: {
+    product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Product',
       required: [true, 'Please add a product'],
@@ -18,13 +18,13 @@ const variantSchema = new Schema<TVariant>(
     color: {
       type: String,
       trim: true,
-      maxlength: [50, 'Color cannot be more than 50 characters'],
     },
-    size: {
-      type: String,
-      trim: true,
-      maxlength: [50, 'Size cannot be more than 50 characters'],
-    },
+    size: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
     images: [
       {
         type: String,

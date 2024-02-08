@@ -4,6 +4,8 @@ export type TReview = {
   _id?: string
   description: string
   rating: number
-  productId?: mongoose.Schema.Types.ObjectId
-  userId?: mongoose.Schema.Types.ObjectId
+  product?: mongoose.Schema.Types.ObjectId
+  user?: mongoose.Schema.Types.ObjectId
+  createdAt?: Date
+  updatedAt?: Date
 }
