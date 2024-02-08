@@ -3,7 +3,12 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
 //import routes
-import { userRouter, productRouter } from './routes'
+import {
+  userRouter,
+  productRouter,
+  domainRouter,
+  categoryRouter,
+} from './routes'
 import { notFound, errorHandler, processRequest } from './middlewares'
 import { catchAsync } from './utils'
 import { dbConnect, limiter } from './config'
@@ -11,12 +16,31 @@ import { dbConnect, limiter } from './config'
 //app config
 const app: Application = express()
 
+// express.json() is a method inbuilt in express to recognize the incoming Request Object as a JSON Object.
+app.use(express.json())
+
+// express.urlencoded() is a method inbuilt in express to recognize the incoming Request Object as strings or arrays.
+app.use(express.urlencoded({ extended: true }))
+
+// CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
+app.use(
+  cors({
+    origin: ['*'],
+    credentials: true,
+  }),
+)
+
+// Cookie parser is a middleware which parses cookies attached to the client request object.
+app.use(cookieParser())
+
 //rate limiter
 app.use('/api', limiter)
 
 //routes
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/product', productRouter)
+app.use('/api/v1/domain', domainRouter)
+app.use('/api/v1/category', categoryRouter)
 
 // test route
 app.get(
@@ -26,24 +50,14 @@ app.get(
   }),
 )
 
+//static files
+app.use(express.static('public')) // to serve static files
+
 // add favicon.ico to static files on /public folder /favicon.ico
 app.use('/favicon.ico', express.static('public/favicon.ico'))
 
 // db config
 dbConnect()
-
-//static files
-app.use(express.static('public')) // to serve static files
-
-//middlewares
-app.use(express.json())
-app.use(
-  cors({
-    origin: ['*'],
-    credentials: true,
-  }),
-)
-app.use(cookieParser())
 
 //error handling middleware
 app.use(notFound)

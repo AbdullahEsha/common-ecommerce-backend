@@ -12,35 +12,57 @@ const createProduct = catchAsync(
       description,
       ragularPrice,
       salePrice,
-      status,
       category,
       domain,
+      status,
     } = req.body
 
-    const slug = slugify(title, { lower: true })
     const sku = generateSKU(6)
+    const slug = slugify(title, { lower: true }) + '-' + sku
 
-    const product: TProduct = {
-      sku,
+    const productData: TProduct = {
       title,
-      slug,
       description,
       ragularPrice,
       salePrice,
-      status,
       category,
       domain,
+      status,
+      sku,
+      slug,
     }
 
-    const newProduct = await Product.create(product)
+    // create new product
+    const product = await Product.create(productData)
 
-    if (!newProduct) return next(new AppError('Product not created', 400))
+    if (!product) {
+      return next(new AppError('Product not created', 400))
+    }
 
     res.status(201).json({
       status: 'success',
-      data: newProduct,
+      message: 'Product created successfully',
+      data: product,
     })
   },
 )
 
-export { createProduct }
+const allProducts = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const products = await Product.find()
+      .populate('category')
+      .populate('domain')
+
+    if (!products) {
+      return next(new AppError('No products found', 404))
+    }
+
+    res.status(200).json({
+      status: 'success',
+      results: products.length,
+      data: products,
+    })
+  },
+)
+
+export { createProduct, allProducts }

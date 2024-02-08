@@ -1,3 +1,5 @@
 export * from './userController'
 export * from './credentialController'
 export * from './productController'
+export * from './domainController'
+export * from './categoryController'
