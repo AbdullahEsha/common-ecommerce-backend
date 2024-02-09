@@ -2,8 +2,10 @@ import { Request, Response, NextFunction } from 'express'
 import { catchAsync, AppError } from '../utils'
 import { User } from '../models'
 import { TUserProtect } from '../types'
-import jwt from 'jsonwebtoken'
 import bcryptjs from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import { promisify } from 'util'
+import crypto from 'crypto'
 
 // use proper types and generics to user authentification middleware using jwt and bcryptjs from headers and compare it with the one in the database
 export const protect = catchAsync(

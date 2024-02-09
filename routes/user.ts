@@ -4,7 +4,7 @@ const router = express.Router()
 
 //import controllers
 import {
-  getUsers,
+  allUsers,
   getUser,
   createUser,
   updateUser,
@@ -12,7 +12,7 @@ import {
 } from '../controllers'
 
 //routes
-router.route('/').get(getUsers).post(createUser)
+router.route('/').get(allUsers).post(createUser)
 
 router.route('/:id').get(getUser).put(updateUser).delete(deleteUser)
 

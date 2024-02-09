@@ -27,7 +27,6 @@ const userSchema = new Schema<TUser>(
       required: [true, 'Please add a password'],
       select: false,
       trim: true,
-      maxlength: [50, 'Password cannot be more than 50 characters'],
     },
     userType: {
       type: String,

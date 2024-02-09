@@ -2,11 +2,15 @@ import { User } from '../models'
 import { Request, Response, NextFunction } from 'express'
 import { TUser, TUserAdd } from '../types'
 import { catchAsync, AppError } from '../utils'
+import bcryptjs from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import { promisify } from 'util'
+import crypto from 'crypto'
 
 // get all users
-const getUsers = catchAsync(
+const allUsers = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const users: TUser[] = await User.find()
+    const users: TUser[] = await User.find().populate('domain')
     if (!users) {
       return next(new AppError('No users found', 404))
     }
@@ -32,10 +36,27 @@ const getUser = catchAsync(
 // add user
 const createUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const user = await User.create(req.body as TUser)
+    const { name, email, password, userType, domain }: TUser = req.body
+
+    const checkUser: TUser | null = await User.findOne({ email })
+
+    if (checkUser) {
+      return next(new AppError('User already exists', 400))
+    }
+
+    //encrypt the password
+    const encPassword = await bcryptjs.hash(password, 12)
+
+    const user = await User.create({
+      name,
+      email,
+      password: encPassword,
+      userType,
+      domain,
+    })
 
     if (!user) {
-      return next(new AppError('No user found', 404))
+      return next(new AppError('User not created', 400))
     }
 
     res.status(201).json({
@@ -92,4 +113,4 @@ const deleteUser = catchAsync(
   },
 )
 
-export { getUsers, getUser, createUser, updateUser, deleteUser }
+export { allUsers, getUser, createUser, updateUser, deleteUser }
