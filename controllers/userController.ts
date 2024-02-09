@@ -3,9 +3,6 @@ import { Request, Response, NextFunction } from 'express'
 import { TUser, TUserAdd } from '../types'
 import { catchAsync, AppError } from '../utils'
 import bcryptjs from 'bcryptjs'
-import jwt from 'jsonwebtoken'
-import { promisify } from 'util'
-import crypto from 'crypto'
 
 // get all users
 const allUsers = catchAsync(

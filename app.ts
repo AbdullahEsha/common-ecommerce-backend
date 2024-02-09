@@ -10,6 +10,7 @@ import {
   categoryRouter,
   variantRouter,
   reviewRouter,
+  colorRouter,
 } from './routes'
 import { notFound, errorHandler, processRequest } from './middlewares'
 import { catchAsync } from './utils'
@@ -45,6 +46,7 @@ app.use('/api/v1/domain', domainRouter)
 app.use('/api/v1/category', categoryRouter)
 app.use('/api/v1/variant', variantRouter)
 app.use('/api/v1/review', reviewRouter)
+app.use('/api/v1/color', colorRouter)
 
 // test route
 app.get(
