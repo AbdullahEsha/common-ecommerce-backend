@@ -20,3 +20,11 @@ export type TUserAdd = {
   role?: string
   domain?: mongoose.Schema.Types.ObjectId
 }
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: TUser
+    }
+  }
+}
