@@ -7,6 +7,8 @@ export type TUser = {
   password: string
   role?: string
   domain?: mongoose.Schema.Types.ObjectId
+  updatedAt?: string
+  createdAt?: string
 }
 
 // type for user save method
@@ -17,8 +19,4 @@ export type TUserAdd = {
   password: string
   role?: string
   domain?: mongoose.Schema.Types.ObjectId
-}
-
-export type TUserProtect = {
-  changedPasswordAfter(iat: number): boolean
 }

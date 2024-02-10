@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { catchAsync, AppError } from '../utils'
 import { User } from '../models'
-import { TUserProtect } from '../types'
+import { TUser } from '../types'
 import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { promisify } from 'util'
@@ -22,9 +22,19 @@ export const protect = catchAsync(
         new AppError('You are not logged in! Please log in to get access', 401),
       )
     }
-    const decoded: any = jwt.verify(token, process.env.JWT_SECRET!)
-    const currentUser: TUserProtect | null = await User.findById(decoded.id)
-    if (!currentUser) {
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as
+      | TUser
+      | 'error'
+
+    if (decoded === 'error') {
+      return next(
+        new AppError('Invalid token! Please log in to get access', 401),
+      )
+    }
+
+    const user: TUser | null = await User.findById(decoded._id)
+    if (!user) {
       return next(
         new AppError(
           'The user belonging to this token does no longer exist.',
@@ -32,16 +42,16 @@ export const protect = catchAsync(
         ),
       )
     }
-    if (currentUser.changedPasswordAfter(decoded.iat)) {
-      return next(
-        new AppError(
-          'User recently changed password! Please log in again.',
-          401,
-        ),
-      )
-    }
+
+    console.log(
+      "Checking if user's password was changed after the token was issued",
+    )
+    console.log('user 🚀', user)
+    console.log('decoded 🎉', decoded)
+    console.log('req.user 🤷‍♀️', (req as any).user)
+
     //req.user = currentUser
-    res.locals.user = currentUser
+    res.locals.user = user
     next()
   },
 )
