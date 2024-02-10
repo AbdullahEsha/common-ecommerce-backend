@@ -33,7 +33,7 @@ const getUser = catchAsync(
 // add user
 const createUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { name, email, password, userType, domain }: TUser = req.body
+    const { name, email, password, role, domain }: TUser = req.body
 
     const checkUser: TUser | null = await User.findOne({ email })
 
@@ -48,7 +48,7 @@ const createUser = catchAsync(
       name,
       email,
       password: encPassword,
-      userType,
+      role,
       domain,
     })
 

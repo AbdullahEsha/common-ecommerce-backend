@@ -15,6 +15,7 @@ import {
 import { notFound, errorHandler, processRequest } from './middlewares'
 import { catchAsync } from './utils'
 import { dbConnect, limiter } from './config'
+import helmet from 'helmet'
 
 //app config
 const app: Application = express()
@@ -23,7 +24,10 @@ const app: Application = express()
 app.use(express.json())
 
 // express.urlencoded() is a method inbuilt in express to recognize the incoming Request Object as strings or arrays.
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true })) // to support URL-encoded bodies
+
+// Helmet helps you secure your Express apps by setting various HTTP headers.
+app.use(helmet())
 
 // CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
 app.use(

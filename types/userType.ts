@@ -5,7 +5,7 @@ export type TUser = {
   name: string
   email: string
   password: string
-  userType?: string
+  role?: string
   domain?: mongoose.Schema.Types.ObjectId
 }
 
@@ -15,7 +15,7 @@ export type TUserAdd = {
   name: string
   email: string
   password: string
-  userType?: string
+  role?: string
   domain?: mongoose.Schema.Types.ObjectId
 }
 

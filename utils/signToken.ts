@@ -8,7 +8,7 @@ export const signToken = (user: TUser) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      userType: user.userType,
+      role: user.role,
       domain: user.domain,
     },
     JWT_SECRET!,
