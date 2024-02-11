@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken'
 // import crypto from 'crypto'
 
 // use proper types and generics to user authentification middleware using jwt and bcryptjs from headers and compare it with the one in the database
-export const protect = catchAsync(
+const protect = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     let token // declare token variable
 
@@ -34,7 +34,8 @@ export const protect = catchAsync(
     }
 
     // check if user still exists
-    const user: TUser | null = await User.findById(decoded._id)
+    // select password +
+    const user: TUser = await User.findById(decoded._id).select('+password')
 
     if (!user) {
       return next(
@@ -60,3 +61,5 @@ export const protect = catchAsync(
     next()
   },
 )
+
+export { protect }

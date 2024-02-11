@@ -13,9 +13,10 @@ const loginUser = catchAsync(
       return next(new AppError('Please provide email and password!', 400))
     }
 
-    // check if user exists && password is correct
+    // select password field because it is not selected by default in the schema
     const user: TUser = await User.findOne({ email }).select('+password')
 
+    // if user does not exist or password is incorrect, send error
     if (!user || !comparePassword(password, user.password)) {
       return next(new AppError('Incorrect email or password', 401))
     } else {
@@ -23,7 +24,7 @@ const loginUser = catchAsync(
       const token = signToken(user)
 
       res.status(200).json({
-        success: true,
+        status: 'success',
         token,
         user,
       })
@@ -34,7 +35,7 @@ const loginUser = catchAsync(
 // register user
 const registerUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { name, email, password, domain } = req.body
+    const { name, email, password, domain }: TUser = req.body
 
     const user: TUserAdd = new User({
       name,

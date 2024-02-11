@@ -1,3 +1,11 @@
+declare global {
+  namespace Express {
+    interface Request {
+      user?: TUser
+    }
+  }
+}
+
 import mongoose from 'mongoose'
 
 export type TUser = {
@@ -5,10 +13,10 @@ export type TUser = {
   name: string
   email: string
   password: string
-  role?: string
+  role?: 'admin' | 'user' | 'superadmin'
   domain?: mongoose.Schema.Types.ObjectId
-  updatedAt?: string
-  createdAt?: string
+  updatedAt?: Date
+  createdAt?: Date
 }
 
 // type for user save method
@@ -17,14 +25,6 @@ export type TUserAdd = {
   name: string
   email: string
   password: string
-  role?: string
+  role?: 'admin' | 'user' | 'superadmin'
   domain?: mongoose.Schema.Types.ObjectId
-}
-
-declare global {
-  namespace Express {
-    interface Request {
-      user?: TUser
-    }
-  }
 }
