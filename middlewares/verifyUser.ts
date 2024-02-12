@@ -1,6 +1,19 @@
 import { Request, Response, NextFunction } from 'express'
 import { catchAsync } from '../utils'
 
+const checkUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (req.user && req.user.role === 'user') {
+      return next()
+    }
+
+    res.status(403).json({
+      status: 'Permission denied! 🔴',
+      message: 'You are not allowed to access this route',
+    })
+  },
+)
+
 const checkAdmin = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     if (req.user && req.user.role === 'admin') {
@@ -8,7 +21,7 @@ const checkAdmin = catchAsync(
     }
 
     res.status(403).json({
-      status: 'failed to access route 🔴',
+      status: 'Permission denied! 🔴',
       message: 'You are not allowed to access this route',
     })
   },
@@ -21,10 +34,10 @@ const checkSuperAdmin = catchAsync(
     }
 
     res.status(403).json({
-      status: 'failed to access route 🔴',
+      status: 'Permission denied! 🔴',
       message: 'You are not allowed to access this route',
     })
   },
 )
 
-export { checkAdmin, checkSuperAdmin }
+export { checkUser, checkAdmin, checkSuperAdmin }

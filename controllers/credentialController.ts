@@ -2,6 +2,7 @@ import { User } from '../models'
 import { Request, Response, NextFunction } from 'express'
 import { TUser, TUserAdd } from '../types'
 import { catchAsync, AppError, signToken, comparePassword } from '../utils'
+import bcryptjs from 'bcryptjs'
 
 // login user and send jwt token
 const loginUser = catchAsync(
@@ -10,7 +11,7 @@ const loginUser = catchAsync(
 
     // check if email and password exist
     if (!email || !password) {
-      return next(new AppError('Please provide email and password!', 400))
+      return next(new AppError('Please provide email and password! 🔑', 400))
     }
 
     // select password field because it is not selected by default in the schema
@@ -18,13 +19,14 @@ const loginUser = catchAsync(
 
     // if user does not exist or password is incorrect, send error
     if (!user || !comparePassword(password, user.password)) {
-      return next(new AppError('Incorrect email or password', 401))
+      return next(new AppError('Incorrect email or password! ❌', 401))
     } else {
       // if everything is ok, send token to client
       const token = signToken(user)
 
       res.status(200).json({
         status: 'success',
+        message: 'User logged in successfully! 🟢',
         token,
         user,
       })
@@ -37,23 +39,25 @@ const registerUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { name, email, password, domain }: TUser = req.body
 
+    const passwordHash: string = await bcryptjs.hash(password, 12)
+
     const user: TUserAdd = new User({
       name,
       email,
-      password,
+      password: passwordHash,
       domain,
     })
 
     const newUser: TUserAdd = await user.save()
 
     if (!newUser) {
-      return next(new AppError('No user found', 404))
+      return next(new AppError('No user found! 🔴', 404))
     }
 
     res.status(201).json({
-      message: 'User added',
+      status: 'success',
+      message: 'User added successfully. Please login. 🟢',
       user: newUser,
-      success: true,
     })
   },
 )
@@ -68,21 +72,22 @@ const changePassword = catchAsync(
     const user: TUserAdd = await User.findOne({ email }).select('+password')
 
     if (!user) {
-      return next(new AppError('User not found', 404))
+      return next(new AppError('User not found! 🔴', 404))
     }
 
     if (!comparePassword(password, user.password)) {
-      return next(new AppError('Incorrect password', 401))
+      return next(new AppError('Incorrect password! 🔴', 401))
     }
 
-    user.password = newPassword
+    // hash the new password
+    user.password = await bcryptjs.hash(newPassword, 12)
 
     const updatedUser: TUserAdd = await user.save()
 
     res.status(200).json({
-      message: 'Password updated',
+      status: 'success',
+      message: 'Password updated successfully. Please login again. 🟢',
       user: updatedUser,
-      success: true,
     })
   },
 )

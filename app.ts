@@ -11,6 +11,7 @@ import {
   variantRouter,
   reviewRouter,
   colorRouter,
+  credentialRouter,
 } from './routes'
 import { notFound, errorHandler, processRequest } from './middlewares'
 import { catchAsync } from './utils'
@@ -44,6 +45,7 @@ app.use(cookieParser())
 app.use('/api', limiter)
 
 //routes
+app.use('/api/v1/credential', credentialRouter)
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/product', productRouter)
 app.use('/api/v1/domain', domainRouter)

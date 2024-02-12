@@ -10,7 +10,7 @@ import {
   updateUser,
   deleteUser,
 } from '../controllers'
-import { checkAdmin, checkSuperAdmin } from '../middlewares'
+import { checkAdmin } from '../middlewares'
 
 //routes
 router.route('/').get(allUsers).post(createUser)

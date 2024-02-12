@@ -1,3 +1,3 @@
 export * from './auth'
 export * from './globalError'
-export * from './checkUser'
+export * from './verifyUser'
