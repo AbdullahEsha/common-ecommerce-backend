@@ -5,7 +5,7 @@ export type TContact = {
   email: string
   subject: string
   message: string
-  status: string
+  status: 'active' | 'inactive'
   domain: mongoose.Schema.Types.ObjectId
   createdAt?: Date
   updatedAt?: Date

@@ -4,7 +4,7 @@ export type TDomain = {
   subDomain: string
   userLimit: number
   productLimit: number
-  status?: string
+  status?: 'active' | 'inactive'
   createdAt?: Date
   updatedAt?: Date
 }

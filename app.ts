@@ -8,7 +8,6 @@ import {
   productRouter,
   domainRouter,
   categoryRouter,
-  variantRouter,
   reviewRouter,
   colorRouter,
   credentialRouter,
@@ -50,7 +49,6 @@ app.use('/api/v1/user', userRouter)
 app.use('/api/v1/product', productRouter)
 app.use('/api/v1/domain', domainRouter)
 app.use('/api/v1/category', categoryRouter)
-app.use('/api/v1/variant', variantRouter)
 app.use('/api/v1/review', reviewRouter)
 app.use('/api/v1/color', colorRouter)
 

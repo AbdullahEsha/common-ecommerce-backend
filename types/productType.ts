@@ -1,5 +1,12 @@
 import { TReview } from './reviewType'
-import { TVariant } from './variantType'
+
+type TVariant = {
+  _id?: string
+  quantity: number
+  color: string
+  size: string[]
+  images?: string[]
+}
 
 export type TProduct = {
   _id?: string
@@ -11,7 +18,7 @@ export type TProduct = {
   salePrice?: number
   review?: TReview[]
   category?: string
-  status?: string
+  status?: 'active' | 'inactive'
   domain?: string
   variant?: TVariant[]
   createdAt?: Date
