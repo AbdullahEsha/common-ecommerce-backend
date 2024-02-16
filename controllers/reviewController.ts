@@ -22,7 +22,7 @@ const createReview = catchAsync(
 )
 
 // get all reviews
-const allReviews = catchAsync(
+const getAllReviews = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const reviews = await Review.find().populate('product').populate('user')
 
@@ -38,4 +38,61 @@ const allReviews = catchAsync(
   },
 )
 
-export { createReview, allReviews }
+// get review by id
+const getReview = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const reviewId = req.params.id
+    const review = await Review.findById(reviewId)
+
+    if (!review) {
+      return next(new AppError('Review not found', 404))
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Review found',
+      data: review,
+    })
+  },
+)
+
+// update review by id
+const updateReview = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const reviewId = req.params.id
+    const review = await Review.findByIdAndUpdate(reviewId, req.body, {
+      new: true,
+      runValidators: true,
+    })
+
+    if (!review) {
+      return next(new AppError('Review not found', 404))
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Review updated successfully',
+      data: review,
+    })
+  },
+)
+
+// delete review by id
+const deleteReview = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const reviewId = req.params.id
+    const review = (await Review.findByIdAndDelete(reviewId)) as TReview
+
+    if (!review) {
+      return next(new AppError('Review not found', 404))
+    }
+
+    res.status(204).json({
+      status: 'success',
+      message: 'Review deleted successfully',
+      data: null,
+    })
+  },
+)
+
+export { createReview, getAllReviews, getReview, updateReview, deleteReview }

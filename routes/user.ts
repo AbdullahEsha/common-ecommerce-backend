@@ -4,7 +4,7 @@ const router = express.Router()
 
 //import controllers
 import {
-  allUsers,
+  getAllUsers,
   getUser,
   createUser,
   updateUser,
@@ -13,7 +13,7 @@ import {
 import { checkAdmin } from '../middlewares'
 
 //routes
-router.route('/').get(allUsers).post(createUser)
+router.route('/').get(getAllUsers).post(createUser)
 
 router.route('/:id').get(getUser)
 

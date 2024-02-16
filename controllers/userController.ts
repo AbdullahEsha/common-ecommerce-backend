@@ -5,7 +5,7 @@ import { catchAsync, AppError } from '../utils'
 import bcryptjs from 'bcryptjs'
 
 // get all users
-const allUsers = catchAsync(
+const getAllUsers = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const users: TUser[] = await User.find().populate('domain')
     if (!users) {
@@ -110,4 +110,4 @@ const deleteUser = catchAsync(
   },
 )
 
-export { allUsers, getUser, createUser, updateUser, deleteUser }
+export { getAllUsers, getUser, createUser, updateUser, deleteUser }

@@ -3,9 +3,9 @@ import express from 'express'
 const router = express.Router()
 
 //import controllers
-import { createCategory, allCategories } from '../controllers'
+import { createCategory, getAllCategories } from '../controllers'
 
 //routes
-router.route('/').get(allCategories).post(createCategory)
+router.route('/').get(getAllCategories).post(createCategory)
 
 export { router as categoryRouter }

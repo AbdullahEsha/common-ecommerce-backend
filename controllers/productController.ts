@@ -33,23 +33,22 @@ const createProduct = catchAsync(
   },
 )
 
-const allProducts = catchAsync(
+const getAllProducts = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const page = Number(req.query.page) || 1
-    const limit = Number(req.query.limit)
-
-    // Parse and split parameters into arrays
     const parseQueryParamArray = (param: string) => {
       if (req.query[param]) {
         return (req.query[param] as string).split(',')
       }
     }
 
-    // http://localhost:8000/api/v1/product?color=Black,Red&category=SAREE,PARTY%20GOWN&size=XL,L&price=1000,2000&limit=10&page=1&sortBy=desc
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit)
 
+    // http://localhost:8000/api/v1/product?color=Black,Red&category=SAREE,PARTY%20GOWN&size=XL,L&price=1000,2000&limit=10&page=1&sortBy=desc
     const queryFields = ['category', 'size', 'color', 'minPrice', 'maxPrice']
 
     const filter = queryFields.reduce((result: any, field: string) => {
+      // category, size, color filter in more dry way
       if (field === 'category' && req.query.category) {
         return {
           ...result,
@@ -111,6 +110,10 @@ const allProducts = catchAsync(
         },
       ])
 
+    if (!products) {
+      return next(new AppError('No product found', 404))
+    }
+
     const count = await Product.find(filter).countDocuments()
 
     res.status(200).json({
@@ -125,4 +128,67 @@ const allProducts = catchAsync(
   },
 )
 
-export { createProduct, allProducts }
+// get product by id
+const getProduct = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const productId = req.params.id
+    const product = await Product.findById(productId)
+
+    if (!product) {
+      return next(new AppError('Product not found', 404))
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Product found',
+      data: product,
+    })
+  },
+)
+
+// update product
+const updateProduct = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const productId = req.params.id
+    const product = await Product.findByIdAndUpdate(productId, req.body, {
+      new: true,
+      runValidators: true,
+    })
+
+    if (!product) {
+      return next(new AppError('Product not found', 404))
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Product updated successfully',
+      data: product,
+    })
+  },
+)
+
+// delete product
+const deleteProduct = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const productId = req.params.id
+    const product = await Product.findByIdAndDelete(productId)
+
+    if (!product) {
+      return next(new AppError('Product not found', 404))
+    }
+
+    res.status(204).json({
+      status: 'success',
+      message: 'Product deleted successfully',
+      data: null,
+    })
+  },
+)
+
+export {
+  createProduct,
+  getAllProducts,
+  getProduct,
+  updateProduct,
+  deleteProduct,
+}
