@@ -44,6 +44,7 @@ const allProducts = catchAsync(
         return (req.query[param] as string).split(',')
       }
     }
+
     // http://localhost:8000/api/v1/product?color=Black,Red&category=SAREE,PARTY%20GOWN&size=XL,L&price=1000,2000&limit=10&page=1&sortBy=desc
 
     const queryFields = ['category', 'size', 'color', 'minPrice', 'maxPrice']
@@ -83,14 +84,32 @@ const allProducts = catchAsync(
 
     const sortDirection = req.query.sort === 'asc' ? 1 : -1
     const sortBy = req.query.sortBy || 'createdAt' || 'updatedAt'
+    // sort options based on price also
 
-    const sortOptions = { [sortBy as 'createdAt' | 'updatedAt']: sortDirection }
+    let sortOptions = {}
+    if (req.query.sortByPrice) {
+      const sortPrice = req.query.sortByPrice === 'asc' ? 1 : -1
+      sortOptions = { ragularPrice: sortPrice }
+    } else {
+      sortOptions = {
+        [sortBy as 'createdAt' | 'updatedAt']: sortDirection,
+      }
+    }
 
     const products = await Product.find(filter)
       .sort(sortOptions as {})
       .limit(limit)
       .skip(limit * (page - 1))
-      .populate(['category', 'domain'])
+      .populate([
+        {
+          path: 'category',
+          select: 'title slug status',
+        },
+        {
+          path: 'domain',
+          select: 'name subDomain userLimit productLimit status',
+        },
+      ])
 
     const count = await Product.find(filter).countDocuments()
 
