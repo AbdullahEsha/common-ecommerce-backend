@@ -1,5 +1,5 @@
 // import { io, httpServer } from './config'
-import { PORT } from './envSetup'
+const { PORT } = require('./envSetup')
 
 //app config
 const app = require('./app')
