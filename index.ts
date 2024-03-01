@@ -1,6 +1,8 @@
-import app from './app'
 import { io, httpServer } from './config'
 import { PORT, SOCKET_PORT } from './envSetup'
+
+//app config
+const app = require('./app')
 
 //port config
 const port = Number(PORT) || 5000
