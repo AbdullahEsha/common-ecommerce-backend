@@ -1,7 +1,7 @@
 {
   "name": "common-ecommerce-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Common Ecommerce Backend API USING TYPESCRIPT, EXPRESS JS, MONGODB",
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
@@ -10,7 +10,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/cookie-parser": "^1.4.6",
     "@types/cors": "^2.8.17",
