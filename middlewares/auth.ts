@@ -7,7 +7,9 @@ import jwt from 'jsonwebtoken'
 // import { promisify } from 'util'
 // import crypto from 'crypto'
 
-// use proper types and generics to user authentification middleware using jwt and bcryptjs from headers and compare it with the one in the database
+// protect middleware to check if user is logged in or not using jwt token in headers and verify it using jwt.verify
+// jwt.verify will throw an error if token is invalid
+// if token is valid, it will decode the token and get user id
 const protect = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     let token // declare token variable

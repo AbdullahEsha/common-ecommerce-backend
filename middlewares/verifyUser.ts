@@ -10,6 +10,7 @@ const checkUser = catchAsync(
     res.status(403).json({
       status: 'Permission denied! 🔴',
       message: 'You are not allowed to access this route',
+      checkUser: req.user,
     })
   },
 )

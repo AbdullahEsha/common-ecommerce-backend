@@ -44,7 +44,7 @@ app.use(cookieParser())
 app.use('/api', limiter)
 
 //routes
-app.use('/api/v1/credential', credentialRouter)
+app.use('/api/v1', credentialRouter)
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/product', productRouter)
 app.use('/api/v1/domain', domainRouter)

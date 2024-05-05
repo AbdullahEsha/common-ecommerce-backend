@@ -28,7 +28,6 @@ const loginUser = catchAsync(
         status: 'success',
         message: 'User logged in successfully! 🟢',
         token,
-        user,
       })
     }
   },
@@ -56,8 +55,7 @@ const registerUser = catchAsync(
 
     res.status(201).json({
       status: 'success',
-      message: 'User added successfully. Please login. 🟢',
-      user: newUser,
+      message: 'User added successfully. Please login to get access. 🟢',
     })
   },
 )

@@ -10,16 +10,15 @@ import {
   updateUser,
   deleteUser,
 } from '../controllers'
-import { checkAdmin } from '../middlewares'
+import { checkAdmin, protect, checkUser } from '../middlewares'
 
 //routes
-router.route('/').get(getAllUsers).post(createUser)
-
+router.route('/').post(createUser)
 router.route('/:id').get(getUser)
 
 // protect the routes below
-router.use(checkAdmin)
+router.route('/').get(protect, checkAdmin, getAllUsers)
 
-router.route('/:id').put(updateUser).delete(deleteUser)
+router.route('/:id').put(updateUser).delete(protect, checkAdmin, deleteUser)
 
 export { router as userRouter }
